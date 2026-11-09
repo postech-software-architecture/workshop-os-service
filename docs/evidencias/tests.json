@@ -1,0 +1,569 @@
+[
+  {
+    "name": "com.postech.foundation.ApplicationWiringTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.bdd.BehaviorTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.BudgetSnapshotTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.CatalogHttpTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.ConsumerHealthTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.DistributedOrderTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.EnvelopeTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.IdentityApiTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.JwtInteropTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.MessageContractMatrixTest",
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.OrdersTest",
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.SagaTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.SecurityTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.SqlOutboxTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.StockLedgerTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.foundation.TransportTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.api.controllers.VersionControllerTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.exceptions.ContaInativaExceptionTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.AtualizarClienteUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.AtualizarPecaUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.AtualizarServicoUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.AtualizarVeiculoUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarClientePorDocumentoUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarClientePorIdUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarEstoquePorIdUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarPecaPorSkuUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarResponsavelTransicaoUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarServicoPorIdUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarUsuarioAutenticadoUseCaseTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarVeiculoPorIdUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.BuscarVeiculoPorPlacaUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.CriarClienteUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.CriarEstoqueUseCaseTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.CriarOrdemServicoUseCaseTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.CriarPecaUseCaseTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.CriarServicoUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.CriarVeiculoUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.DesvincularClienteVeiculoUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.EncerrarSessaoUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.LiberarReservasEstoqueServiceTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarClientesUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarEstoquesPorPecaUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarMovimentacoesEstoquePorOrdemServicoUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarServicosPorCategoriaUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarServicosUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarVeiculosPorClienteUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ListarVeiculosUseCaseTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RealizarLoginUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.ReativarServicoUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RegistrarHistoricoStatusOrdemServicoUseCaseTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RegistrarMovimentacaoUseCaseTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RemoverClienteUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RemoverPecaUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RemoverServicoUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RemoverVeiculoUseCaseTest",
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.RenovarSessaoUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.application.usecases.VincularClienteVeiculoUseCaseTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.ClienteTest",
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.DomainCoverageEdgesTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.EnderecoTest",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.EstoqueTest",
+    "tests": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.MovimentacaoEstoqueTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.OrcamentoTest",
+    "tests": 19,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.OrdemServicoTest",
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.PecaInsumoTest",
+    "tests": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.RefreshTokenTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.ServicoTest",
+    "tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.StatusOrdemServicoTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.UsuarioTest",
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.entities.VeiculoTest",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.valueobjects.DocumentoTest",
+    "tests": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.valueobjects.PlacaTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.domain.valueobjects.TipoDocumentoTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.observability.MicrometerOrdemServicoMetricsTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.persistence.mappers.MapperCoverageTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.persistence.repositories.RepositoryCoverageTest",
+    "tests": 3,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.security.ContextoSegurancaProviderImplTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.security.DetalhesUsuarioServiceImplTest",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.security.JwtAccessDeniedHandlerTest",
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.security.JwtAuthenticationFilterTest",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  {
+    "name": "com.postech.workshop_service.infrastructure.security.JwtTokenServiceTest",
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+]

@@ -160,6 +160,11 @@ public class Usuario extends EntidadeBase {
 	}
 
 	@Override
+	public boolean equals(Object other) {
+		return this == other || (other instanceof Usuario usuario && getId().equals(usuario.getId()));
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(getId());
 	}

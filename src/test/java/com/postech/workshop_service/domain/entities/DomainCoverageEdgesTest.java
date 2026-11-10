@@ -17,6 +17,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -66,6 +67,11 @@ class DomainCoverageEdgesTest {
 		assertFalse(usuario.possuiRole(Role.CLIENTE));
 		assertFalse(removido.podeAutenticar());
 		assertEquals(java.util.Objects.hash(usuario.getId()), usuario.hashCode());
+		Usuario mesmoId = new Usuario(usuario.getId(), "outro", null, "hash", Set.of(Role.ATENDENTE), null, true, false,
+				LocalDateTime.now(), LocalDateTime.now(), null);
+		assertEquals(usuario, mesmoId);
+		assertEquals(usuario.hashCode(), mesmoId.hashCode());
+		assertNotEquals(usuario, removido);
 		assertThrows(IllegalArgumentException.class,
 				() -> new Usuario(" ", "admin@teste.com", "hash", Set.of(Role.ADMINISTRADOR), null));
 		assertThrows(IllegalArgumentException.class,

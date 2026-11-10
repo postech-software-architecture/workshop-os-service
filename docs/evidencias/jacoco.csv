@@ -56,13 +56,13 @@ workshop-os-service,com.postech.workshop_service.domain.entities,ItemComposicaoT
 workshop-os-service,com.postech.workshop_service.domain.entities,ItemOrcamento,5,40,1,5,1,12,1,5,0,3
 workshop-os-service,com.postech.workshop_service.domain.entities,TipoItemComposicaoTecnica,0,21,0,0,0,4,0,1,0,1
 workshop-os-service,com.postech.workshop_service.domain.entities,OrdemServico,205,580,49,83,41,151,38,59,4,23
-workshop-os-service,com.postech.workshop_service.domain.entities,Usuario,0,218,0,26,0,54,0,25,0,12
+workshop-os-service,com.postech.workshop_service.domain.entities,Usuario,0,237,2,30,0,55,2,27,0,13
 workshop-os-service,com.postech.workshop_service.domain.entities,RefreshToken,0,112,0,14,0,30,0,14,0,7
 workshop-os-service,com.postech.workshop_service.domain.entities,Cliente,0,176,0,20,0,54,0,18,0,8
 workshop-os-service,com.postech.workshop_service.domain.entities,Orcamento,7,226,3,33,1,58,3,26,0,11
 workshop-os-service,com.postech.workshop_service.domain.entities,Estoque,61,309,6,28,11,66,7,29,3,15
 workshop-os-service,com.postech.foundation,TraceHeaders,17,14,3,1,2,6,2,2,0,2
-workshop-os-service,com.postech.foundation,MessageContract,25,417,10,66,15,58,10,37,0,6
+workshop-os-service,com.postech.foundation,MessageContract,24,429,10,70,15,61,10,40,0,7
 workshop-os-service,com.postech.foundation,OrderApi,241,9,20,0,36,4,24,1,14,1
 workshop-os-service,com.postech.foundation,AuthIdentityApi.Request,6,0,0,0,1,0,1,0,1,0
 workshop-os-service,com.postech.foundation,IdentityApi,0,91,0,4,0,21,0,4,0,2
@@ -147,7 +147,7 @@ workshop-os-service,com.postech.workshop_service.application.exceptions,Credenci
 workshop-os-service,com.postech.workshop_service.application.exceptions,TokenInvalidoException,0,4,0,0,0,2,0,1,0,1
 workshop-os-service,com.postech.workshop_service.application.exceptions,ContaInativaException,0,4,0,0,0,2,0,1,0,1
 workshop-os-service,com.postech.workshop_service.application.exceptions,AcessoNegadoException,0,4,0,0,0,2,0,1,0,1
-workshop-os-service,com.postech.workshop_service.api.controllers,GlobalExceptionHandler,0,372,0,2,0,124,0,17,0,16
+workshop-os-service,com.postech.workshop_service.api.controllers,GlobalExceptionHandler,0,373,0,2,0,125,0,17,0,16
 workshop-os-service,com.postech.workshop_service.api.controllers,AuthController,63,15,0,0,17,6,5,1,5,1
 workshop-os-service,com.postech.workshop_service.api.controllers,EstoqueController,15,129,0,0,5,39,1,7,1,7
 workshop-os-service,com.postech.workshop_service.api.controllers,VeiculoController,37,236,0,0,5,64,5,12,5,12

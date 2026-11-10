@@ -263,7 +263,8 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpServletRequest request) {
 
-		String supported = ex.getSupportedHttpMethods() == null ? "" : ex.getSupportedHttpMethods().toString();
+		var methods = ex.getSupportedHttpMethods();
+		String supported = methods == null ? "" : methods.toString();
 		String message = String.format("Método %s não suportado neste recurso. Métodos permitidos: %s.", ex.getMethod(),
 				supported);
 

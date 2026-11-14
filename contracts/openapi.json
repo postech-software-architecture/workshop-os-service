@@ -1,0 +1,3428 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Workshop os",
+    "version": "fase-4-local",
+    "description": "Rotas geradas dos controllers; seguranca e prefixo local documentados na publicacao."
+  },
+  "servers": [
+    {
+      "url": "/os",
+      "description": "Gateway local"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Autenticacao",
+      "description": "Fluxos de login, refresh, logout e identidade autenticada"
+    },
+    {
+      "name": "Estoques",
+      "description": "Gerenciamento de estoques e movimentacoes"
+    },
+    {
+      "name": "Pecas e Insumos",
+      "description": "Gerenciamento de pecas e insumos da oficina"
+    },
+    {
+      "name": "Servicos",
+      "description": "Gerenciamento do catalogo de servicos da oficina"
+    },
+    {
+      "name": "Version",
+      "description": "Versao da aplicacao em execucao"
+    },
+    {
+      "name": "Veiculos",
+      "description": "Gerenciamento de veiculos da oficina"
+    },
+    {
+      "name": "Clientes",
+      "description": "Gerenciamento de clientes da oficina"
+    }
+  ],
+  "paths": {
+    "/api/v1/veiculos/{id}": {
+      "get": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Buscar veiculo por identificador",
+        "operationId": "buscarPorId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "description": "Indica se veiculos inativos devem ser considerados",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VeiculoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Atualizar veiculo",
+        "operationId": "atualizar",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarVeiculoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VeiculoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Remover veiculo logicamente",
+        "operationId": "remover",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/servicos/{id}": {
+      "get": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Buscar servico por identificador",
+        "operationId": "buscarPorId_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "description": "Indica se servicos inativos devem ser considerados",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Atualizar servico do catalogo",
+        "operationId": "atualizar_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarServicoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Remover servico logicamente",
+        "operationId": "remover_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pecas/{id}": {
+      "get": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Buscar peca por ID",
+        "operationId": "buscarPorId_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PecaResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Atualizar dados de uma peca",
+        "operationId": "atualizar_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarPecaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PecaResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Remover uma peca (soft delete)",
+        "operationId": "remover_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/clientes/{id}": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Buscar cliente por ID",
+        "operationId": "buscarPorId_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Atualizar dados de um cliente",
+        "operationId": "atualizar_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AtualizarClienteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Remover um cliente",
+        "operationId": "remover_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/internal/v1/identidade/por-cpf": {
+      "post": {
+        "tags": [
+          "auth-identity-api"
+        ],
+        "operationId": "lookup",
+        "parameters": [
+          {
+            "name": "X-Service-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Identity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v1/identidade/introspectar": {
+      "post": {
+        "tags": [
+          "identity-api"
+        ],
+        "operationId": "introspect",
+        "parameters": [
+          {
+            "name": "X-Service-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/veiculos": {
+      "get": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Listar veiculos com paginacao e filtros",
+        "operationId": "listar",
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "placa",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaVeiculosResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Cadastrar veiculo",
+        "operationId": "criar",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroVeiculoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VeiculoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/veiculos/{id}/clientes/{clienteId}": {
+      "post": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Vincular cliente ao veiculo",
+        "operationId": "vincularCliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VeiculoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Desvincular cliente do veiculo",
+        "operationId": "desvincularCliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VeiculoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/servicos": {
+      "get": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Listar servicos com paginacao e filtros",
+        "operationId": "listar_1",
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "description": "Pagina solicitada (base zero)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "description": "Quantidade de registros por pagina",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "nome",
+            "in": "query",
+            "description": "Filtro parcial pelo nome do servico",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoria",
+            "in": "query",
+            "description": "Filtro por categoria do servico",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MECANICA",
+                "ELETRICA",
+                "ESTETICA",
+                "PREVENTIVA"
+              ]
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "description": "Indica se servicos inativos devem ser considerados",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaServicosResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Cadastrar servico no catalogo",
+        "operationId": "criar_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroServicoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/servicos/{id}/reativar": {
+      "post": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Reativar servico previamente removido",
+        "operationId": "reativar",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pecas": {
+      "get": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Listar pecas com paginacao e filtros",
+        "operationId": "listar_2",
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "nome",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoria",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginaPecasResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Criar uma nova peca ou insumo",
+        "operationId": "criar_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroPecaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PecaResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pecas/estoques": {
+      "post": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Criar um novo estoque para uma peca",
+        "operationId": "criarEstoque",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarEstoqueRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstoqueResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/ordens-servico": {
+      "get": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DadosCriacaoOrdemServico"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/saga/retomar": {
+      "post": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "resumeSaga",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/itens": {
+      "post": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "add",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/entregar": {
+      "post": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "deliver",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/composicao/encerrar": {
+      "post": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "close",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/cancelar": {
+      "post": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/estoques/movimentacoes": {
+      "post": {
+        "tags": [
+          "Estoques"
+        ],
+        "summary": "Registrar uma movimentacao de estoque",
+        "operationId": "registrarMovimentacao",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovimentacaoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovimentacaoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/clientes": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Listar clientes com paginacao",
+        "operationId": "listar_3",
+        "parameters": [
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "tamanho",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClienteResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Criar um novo cliente",
+        "operationId": "criar_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroClienteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "summary": "Renovar sessao autenticada",
+        "operationId": "refresh",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokensResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "summary": "Encerrar uma sessao autenticada",
+        "operationId": "logout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "summary": "Autenticar usuario e emitir tokens",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTokensResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "tags": [
+          "Version"
+        ],
+        "summary": "Retorna a versao da aplicacao em execucao",
+        "operationId": "versao",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/internal/v1/clientes/{id}/contato": {
+      "get": {
+        "tags": [
+          "contact-api"
+        ],
+        "operationId": "get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Service-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/veiculos/placa/{placa}": {
+      "get": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Buscar veiculo por placa",
+        "operationId": "buscarPorPlaca",
+        "parameters": [
+          {
+            "name": "placa",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "description": "Indica se veiculos inativos devem ser considerados",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VeiculoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/veiculos/cliente/{clienteId}": {
+      "get": {
+        "tags": [
+          "Veiculos"
+        ],
+        "summary": "Listar veiculos por cliente",
+        "operationId": "listarPorCliente",
+        "parameters": [
+          {
+            "name": "clienteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VeiculoResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/servicos/categoria/{categoria}": {
+      "get": {
+        "tags": [
+          "Servicos"
+        ],
+        "summary": "Listar servicos por categoria",
+        "operationId": "listarPorCategoria",
+        "parameters": [
+          {
+            "name": "categoria",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MECANICA",
+                "ELETRICA",
+                "ESTETICA",
+                "PREVENTIVA"
+              ]
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "description": "Indica se servicos inativos devem ser considerados",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicoResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/pecas/sku/{sku}": {
+      "get": {
+        "tags": [
+          "Pecas e Insumos"
+        ],
+        "summary": "Buscar peca por SKU",
+        "operationId": "buscarPorSku",
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PecaResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/ordens-servico/{numero}/status": {
+      "get": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "publicStatus",
+        "parameters": [
+          {
+            "name": "numero",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}": {
+      "get": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "get_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/saga": {
+      "get": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "saga",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/historico": {
+      "get": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "history",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ordens-servico/{id}/historico-status": {
+      "get": {
+        "tags": [
+          "order-api"
+        ],
+        "operationId": "history_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/estoques/{id}": {
+      "get": {
+        "tags": [
+          "Estoques"
+        ],
+        "summary": "Buscar estoque por ID",
+        "operationId": "buscarPorId_4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstoqueResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/estoques/peca/{pecaInsumoId}": {
+      "get": {
+        "tags": [
+          "Estoques"
+        ],
+        "summary": "Listar estoques de uma peca",
+        "operationId": "listarPorPeca",
+        "parameters": [
+          {
+            "name": "pecaInsumoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstoqueResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/estoques/movimentacoes/ordem-servico/{ordemServicoId}": {
+      "get": {
+        "tags": [
+          "Estoques"
+        ],
+        "summary": "Consultar movimentacoes por ordem de servico",
+        "operationId": "listarMovimentacoesPorOrdemServico",
+        "parameters": [
+          {
+            "name": "ordemServicoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MovimentacaoResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/clientes/me": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Consultar o proprio cadastro do cliente autenticado",
+        "operationId": "buscarMeuCadastro",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/clientes/documento/{documento}": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "summary": "Buscar cliente por CPF ou CNPJ",
+        "operationId": "buscarPorDocumento",
+        "parameters": [
+          {
+            "name": "documento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "incluirInativos",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClienteResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "tags": [
+          "Autenticacao"
+        ],
+        "summary": "Consultar identidade autenticada",
+        "operationId": "me",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioAutenticadoResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AtualizarVeiculoRequest": {
+        "type": "object",
+        "description": "Dados para atualização de um veículo existente",
+        "properties": {
+          "placa": {
+            "type": "string",
+            "example": "BRA1D23",
+            "maxLength": 10,
+            "minLength": 0
+          },
+          "marca": {
+            "type": "string",
+            "example": "Toyota",
+            "maxLength": 60,
+            "minLength": 0
+          },
+          "modelo": {
+            "type": "string",
+            "example": "Corolla",
+            "maxLength": 80,
+            "minLength": 0
+          },
+          "ano": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2020,
+            "maximum": 3000,
+            "minimum": 1900
+          },
+          "cor": {
+            "type": "string",
+            "example": "Prata",
+            "maxLength": 30,
+            "minLength": 0
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Veículo compartilhado entre familiares",
+            "maxLength": 2000,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "marca",
+          "modelo",
+          "placa"
+        ]
+      },
+      "ClienteVinculadoResponse": {
+        "type": "object",
+        "description": "Cliente vinculado ao veículo",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "nome": {
+            "type": "string",
+            "example": "João da Silva"
+          },
+          "documentoMascarado": {
+            "type": "string",
+            "example": "***.654.321-**"
+          }
+        }
+      },
+      "VeiculoResponse": {
+        "type": "object",
+        "description": "Dados detalhados do veículo",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "placa": {
+            "type": "string"
+          },
+          "marca": {
+            "type": "string"
+          },
+          "modelo": {
+            "type": "string"
+          },
+          "ano": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cor": {
+            "type": "string"
+          },
+          "observacoes": {
+            "type": "string"
+          },
+          "clientes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClienteVinculadoResponse"
+            }
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dataUltimaAtualizacao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dataRemocao": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AtualizarServicoRequest": {
+        "type": "object",
+        "description": "Dados para atualização de um serviço existente no catálogo",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Troca de óleo",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Substituição do óleo do motor e filtro de óleo"
+          },
+          "valor": {
+            "type": "number",
+            "example": 150.0
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "MECANICA",
+              "ELETRICA",
+              "ESTETICA",
+              "PREVENTIVA"
+            ],
+            "example": "PREVENTIVA"
+          },
+          "nivelComplexidade": {
+            "type": "string",
+            "enum": [
+              "BAIXA",
+              "MEDIA",
+              "ALTA"
+            ],
+            "example": "BAIXA"
+          },
+          "garantiaDias": {
+            "type": "integer",
+            "format": "int32",
+            "example": 30
+          },
+          "observacoesTecnicas": {
+            "type": "string",
+            "example": "Utilizar óleo sintético 5W30 conforme manual do fabricante"
+          }
+        },
+        "required": [
+          "descricao",
+          "nome",
+          "valor"
+        ]
+      },
+      "ServicoResponse": {
+        "type": "object",
+        "description": "Dados detalhados do serviço",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "valor": {
+            "type": "number"
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "MECANICA",
+              "ELETRICA",
+              "ESTETICA",
+              "PREVENTIVA"
+            ]
+          },
+          "nivelComplexidade": {
+            "type": "string",
+            "enum": [
+              "BAIXA",
+              "MEDIA",
+              "ALTA"
+            ]
+          },
+          "garantiaDias": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "observacoesTecnicas": {
+            "type": "string"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dataUltimaAtualizacao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dataRemocao": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AtualizarPecaRequest": {
+        "type": "object",
+        "description": "Dados para atualizacao de uma peca ou insumo",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "description": "Nome ou descricao da peca",
+            "example": "Filtro de oleo 5W30 Premium",
+            "maxLength": 200,
+            "minLength": 0
+          },
+          "valorUnitario": {
+            "type": "number",
+            "description": "Preco unitario da peca",
+            "example": 49.9
+          },
+          "estoqueMinimo": {
+            "type": "number",
+            "description": "Nivel minimo para alerta de reposicao",
+            "example": 10
+          },
+          "unidadeMedida": {
+            "type": "string",
+            "description": "Unidade de medida: UN, L, KG, M, ML, CX, PC",
+            "example": "UN"
+          },
+          "tipoItem": {
+            "type": "string",
+            "description": "Tipo principal do item: PECA ou INSUMO",
+            "example": "PECA"
+          },
+          "fornecedor": {
+            "type": "string",
+            "description": "Nome do fornecedor",
+            "example": "Bosch",
+            "maxLength": 200,
+            "minLength": 0
+          },
+          "codigoBarras": {
+            "type": "string",
+            "description": "Codigo de barras do produto",
+            "example": 7891234567890,
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "marca": {
+            "type": "string",
+            "description": "Marca do produto",
+            "example": "Bosch",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "categoria": {
+            "type": "string",
+            "description": "Categoria da peca",
+            "example": "Filtros",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "aplicacao": {
+            "type": "string",
+            "description": "Veiculos ou servicos onde a peca e aplicada",
+            "example": "Hatch compacto ate 2.0",
+            "maxLength": 500,
+            "minLength": 0
+          },
+          "observacoes": {
+            "type": "string",
+            "description": "Observacoes adicionais",
+            "example": "Compativel com Gol, Fox e Polo"
+          }
+        },
+        "required": [
+          "estoqueMinimo",
+          "nome",
+          "tipoItem",
+          "unidadeMedida",
+          "valorUnitario"
+        ]
+      },
+      "PecaResponse": {
+        "type": "object",
+        "description": "Dados de resposta de uma peca ou insumo",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "sku": {
+            "type": "string",
+            "example": "FIL-001"
+          },
+          "nome": {
+            "type": "string",
+            "example": "Filtro de oleo 5W30"
+          },
+          "valorUnitario": {
+            "type": "number",
+            "example": 45.9
+          },
+          "estoqueMinimo": {
+            "type": "number",
+            "example": 5
+          },
+          "unidadeMedida": {
+            "type": "string",
+            "example": "UN"
+          },
+          "tipoItem": {
+            "type": "string",
+            "example": "PECA"
+          },
+          "fornecedor": {
+            "type": "string",
+            "example": "Bosch"
+          },
+          "codigoBarras": {
+            "type": "string",
+            "example": 7891234567890
+          },
+          "marca": {
+            "type": "string",
+            "example": "Bosch"
+          },
+          "categoria": {
+            "type": "string",
+            "example": "Filtros"
+          },
+          "aplicacao": {
+            "type": "string",
+            "example": "Hatch compacto ate 2.0"
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Compativel com Gol, Fox e Polo"
+          },
+          "ativo": {
+            "type": "boolean",
+            "example": true
+          },
+          "quantidadeTotal": {
+            "type": "number",
+            "example": 12.5
+          },
+          "versao": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-29T22:00:00"
+          },
+          "dataUltimaAtualizacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-29T22:30:00"
+          },
+          "dataRemocao": {
+            "type": "string",
+            "format": "date-time",
+            "example": null
+          }
+        }
+      },
+      "AtualizarClienteRequest": {
+        "type": "object",
+        "description": "Dados para atualização de um cliente existente",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "João da Silva Sauro"
+          },
+          "email": {
+            "type": "string",
+            "example": "joao.sauro@email.com"
+          },
+          "telefone": {
+            "type": "string",
+            "example": "(11) 98888-8888"
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoDTO"
+          },
+          "dataNascimentoFundacao": {
+            "type": "string",
+            "format": "date",
+            "example": "1990-01-01"
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Cliente VIP"
+          }
+        },
+        "required": [
+          "nome"
+        ]
+      },
+      "EnderecoDTO": {
+        "type": "object",
+        "description": "Dados de endereço",
+        "properties": {
+          "logradouro": {
+            "type": "string",
+            "example": "Avenida Paulista"
+          },
+          "numero": {
+            "type": "string",
+            "example": 1000
+          },
+          "complemento": {
+            "type": "string",
+            "example": "Apto 101"
+          },
+          "bairro": {
+            "type": "string",
+            "example": "Bela Vista"
+          },
+          "cidade": {
+            "type": "string",
+            "example": "São Paulo"
+          },
+          "estado": {
+            "type": "string",
+            "example": "SP"
+          },
+          "cep": {
+            "type": "string",
+            "example": "01310-100"
+          }
+        }
+      },
+      "ClienteResponse": {
+        "type": "object",
+        "description": "Resposta com os dados do cliente",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "nome": {
+            "type": "string",
+            "example": "João da Silva"
+          },
+          "documento": {
+            "type": "string",
+            "example": "***.456.789-**"
+          },
+          "email": {
+            "type": "string",
+            "example": "joao@email.com"
+          },
+          "telefone": {
+            "type": "string",
+            "example": "(11) 99999-9999"
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoDTO"
+          },
+          "dataNascimentoFundacao": {
+            "type": "string",
+            "format": "date",
+            "example": "1990-01-01"
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Cliente VIP"
+          },
+          "ativo": {
+            "type": "boolean",
+            "example": true
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-04-24T10:00:00"
+          },
+          "dataUltimaAtualizacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-04-24T10:00:00"
+          },
+          "dataRemocao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-04-24T10:00:00"
+          }
+        }
+      },
+      "Request": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string"
+          }
+        }
+      },
+      "Identity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "type": "string"
+          },
+          "usuarioAtivo": {
+            "type": "boolean"
+          },
+          "bloqueado": {
+            "type": "boolean"
+          },
+          "usuarioRemovido": {
+            "type": "boolean"
+          },
+          "clienteAtivo": {
+            "type": "boolean"
+          },
+          "clienteRemovido": {
+            "type": "boolean"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "CadastroVeiculoRequest": {
+        "type": "object",
+        "description": "Dados para cadastro de um novo veículo",
+        "properties": {
+          "placa": {
+            "type": "string",
+            "example": "BRA1D23",
+            "maxLength": 10,
+            "minLength": 0
+          },
+          "marca": {
+            "type": "string",
+            "example": "Toyota",
+            "maxLength": 60,
+            "minLength": 0
+          },
+          "modelo": {
+            "type": "string",
+            "example": "Corolla",
+            "maxLength": 80,
+            "minLength": 0
+          },
+          "ano": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2020,
+            "maximum": 3000,
+            "minimum": 1900
+          },
+          "clientesIds": {
+            "type": "array",
+            "description": "Lista de clientes vinculados ao veículo",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "cor": {
+            "type": "string",
+            "example": "Prata",
+            "maxLength": 30,
+            "minLength": 0
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Veículo compartilhado entre familiares",
+            "maxLength": 2000,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "clientesIds",
+          "marca",
+          "modelo",
+          "placa"
+        ]
+      },
+      "CadastroServicoRequest": {
+        "type": "object",
+        "description": "Dados para cadastro de um novo serviço no catálogo",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Troca de óleo",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "descricao": {
+            "type": "string",
+            "example": "Substituição do óleo do motor e filtro de óleo"
+          },
+          "valor": {
+            "type": "number",
+            "example": 150.0
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "MECANICA",
+              "ELETRICA",
+              "ESTETICA",
+              "PREVENTIVA"
+            ],
+            "example": "PREVENTIVA"
+          },
+          "nivelComplexidade": {
+            "type": "string",
+            "enum": [
+              "BAIXA",
+              "MEDIA",
+              "ALTA"
+            ],
+            "example": "BAIXA"
+          },
+          "garantiaDias": {
+            "type": "integer",
+            "format": "int32",
+            "example": 30
+          },
+          "observacoesTecnicas": {
+            "type": "string",
+            "example": "Utilizar óleo sintético 5W30 conforme manual do fabricante"
+          }
+        },
+        "required": [
+          "descricao",
+          "nome",
+          "valor"
+        ]
+      },
+      "CadastroPecaRequest": {
+        "type": "object",
+        "description": "Dados para cadastro de uma nova peca ou insumo",
+        "properties": {
+          "sku": {
+            "type": "string",
+            "description": "Codigo SKU unico da peca",
+            "example": "FIL-001",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "nome": {
+            "type": "string",
+            "description": "Nome ou descricao da peca",
+            "example": "Filtro de oleo 5W30",
+            "maxLength": 200,
+            "minLength": 0
+          },
+          "valorUnitario": {
+            "type": "number",
+            "description": "Preco unitario da peca",
+            "example": 45.9
+          },
+          "estoqueMinimo": {
+            "type": "number",
+            "description": "Nivel minimo para alerta de reposicao",
+            "example": 5
+          },
+          "unidadeMedida": {
+            "type": "string",
+            "description": "Unidade de medida: UN, L, KG, M, ML, CX, PC",
+            "example": "UN"
+          },
+          "tipoItem": {
+            "type": "string",
+            "description": "Tipo principal do item: PECA ou INSUMO",
+            "example": "PECA"
+          },
+          "fornecedor": {
+            "type": "string",
+            "description": "Nome do fornecedor",
+            "example": "Bosch",
+            "maxLength": 200,
+            "minLength": 0
+          },
+          "codigoBarras": {
+            "type": "string",
+            "description": "Codigo de barras do produto",
+            "example": 7891234567890,
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "marca": {
+            "type": "string",
+            "description": "Marca do produto",
+            "example": "Bosch",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "categoria": {
+            "type": "string",
+            "description": "Categoria da peca",
+            "example": "Filtros",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "aplicacao": {
+            "type": "string",
+            "description": "Veiculos ou servicos onde a peca e aplicada",
+            "example": "Hatch compacto ate 2.0",
+            "maxLength": 500,
+            "minLength": 0
+          },
+          "observacoes": {
+            "type": "string",
+            "description": "Observacoes adicionais",
+            "example": "Compativel com Gol, Fox e Polo"
+          }
+        },
+        "required": [
+          "estoqueMinimo",
+          "nome",
+          "sku",
+          "tipoItem",
+          "unidadeMedida",
+          "valorUnitario"
+        ]
+      },
+      "CriarEstoqueRequest": {
+        "type": "object",
+        "description": "Dados para criacao de um novo estoque",
+        "properties": {
+          "pecaInsumoId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID da peca",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "localizacao": {
+            "type": "string",
+            "description": "Localizacao fisica do estoque",
+            "example": "Prateleira A2",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "quantidade": {
+            "type": "number",
+            "description": "Quantidade inicial em estoque",
+            "example": 10
+          }
+        },
+        "required": [
+          "localizacao",
+          "pecaInsumoId",
+          "quantidade"
+        ]
+      },
+      "EstoqueResponse": {
+        "type": "object",
+        "description": "Dados de resposta de um estoque",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          },
+          "pecaInsumoId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440001"
+          },
+          "localizacao": {
+            "type": "string",
+            "example": "Prateleira A2"
+          },
+          "quantidade": {
+            "type": "number",
+            "example": 10.5
+          },
+          "ativo": {
+            "type": "boolean",
+            "example": true
+          },
+          "versao": {
+            "type": "integer",
+            "format": "int32",
+            "example": 5
+          },
+          "dataCriacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-29T22:00:00"
+          },
+          "dataUltimaAtualizacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-29T22:30:00"
+          }
+        }
+      },
+      "DadosCriacaoOrdemServico": {
+        "type": "object",
+        "properties": {
+          "clienteDocumento": {
+            "type": "string"
+          },
+          "veiculoPlaca": {
+            "type": "string"
+          },
+          "veiculoMarca": {
+            "type": "string"
+          },
+          "veiculoModelo": {
+            "type": "string"
+          },
+          "veiculoAno": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "observacoes": {
+            "type": "string"
+          }
+        }
+      },
+      "ItemRequest": {
+        "type": "object",
+        "properties": {
+          "catalogoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tipo": {
+            "type": "string"
+          },
+          "quantidade": {
+            "type": "number"
+          }
+        }
+      },
+      "MovimentacaoRequest": {
+        "type": "object",
+        "description": "Dados para registrar uma movimentacao de estoque",
+        "properties": {
+          "estoqueId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID do estoque",
+            "example": "550e8400-e29b-41d4-a716-446655440001"
+          },
+          "tipo": {
+            "type": "string",
+            "description": "Tipo: ENTRADA ou SAIDA",
+            "example": "ENTRADA"
+          },
+          "quantidade": {
+            "type": "number",
+            "description": "Quantidade movimentada",
+            "example": 5
+          },
+          "motivo": {
+            "type": "string",
+            "description": "Motivo da movimentacao",
+            "example": "Compra de reposicao",
+            "maxLength": 500,
+            "minLength": 0
+          }
+        },
+        "required": [
+          "estoqueId",
+          "quantidade",
+          "tipo"
+        ]
+      },
+      "MovimentacaoResponse": {
+        "type": "object",
+        "description": "Dados de resposta de uma movimentacao de estoque",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440002"
+          },
+          "estoqueId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440001"
+          },
+          "ordemServicoId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440010"
+          },
+          "orcamentoId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "550e8400-e29b-41d4-a716-446655440011"
+          },
+          "tipo": {
+            "type": "string",
+            "example": "ENTRADA"
+          },
+          "quantidade": {
+            "type": "number",
+            "example": 5.0
+          },
+          "quantidadeAnterior": {
+            "type": "number",
+            "example": 10.0
+          },
+          "quantidadePosterior": {
+            "type": "number",
+            "example": 15.0
+          },
+          "motivo": {
+            "type": "string",
+            "example": "Compra de reposicao"
+          },
+          "dataMovimentacao": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-29T22:00:00"
+          }
+        }
+      },
+      "CadastroClienteRequest": {
+        "type": "object",
+        "description": "Dados para cadastro de um novo cliente",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "João da Silva"
+          },
+          "documento": {
+            "type": "string",
+            "example": "123.456.789-01"
+          },
+          "email": {
+            "type": "string",
+            "example": "joao@email.com"
+          },
+          "telefone": {
+            "type": "string",
+            "example": "(11) 99999-9999"
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoDTO"
+          },
+          "dataNascimentoFundacao": {
+            "type": "string",
+            "format": "date",
+            "example": "1990-01-01"
+          },
+          "observacoes": {
+            "type": "string",
+            "example": "Cliente prefere contato via WhatsApp"
+          }
+        },
+        "required": [
+          "documento",
+          "nome"
+        ]
+      },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "AuthTokensResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "LogoutRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "password",
+          "username"
+        ]
+      },
+      "VersionResponse": {
+        "type": "object",
+        "description": "Versao da aplicacao em execucao",
+        "properties": {
+          "version": {
+            "type": "string",
+            "description": "Versao do artefato (project.version do Maven)",
+            "example": "1.0.0"
+          }
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "PaginaVeiculosResponse": {
+        "type": "object",
+        "description": "Resposta paginada contendo veículos",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VeiculoResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginaServicosResponse": {
+        "type": "object",
+        "description": "Resposta paginada contendo serviços",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServicoResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PaginaPecasResponse": {
+        "type": "object",
+        "description": "Resposta paginada contendo pecas e insumos",
+        "properties": {
+          "conteudo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PecaResponse"
+            }
+          },
+          "pagina": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tamanho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElementos": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPaginas": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UsuarioAutenticadoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "username": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

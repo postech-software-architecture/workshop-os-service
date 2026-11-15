@@ -3,13 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       confirmation:
-        description: CARREGAR SEEDS DEMO para seed; RESTAURAR PROFILE OS para restore
+        description: CARREGAR SEEDS DEMO, RESTAURAR PROFILE OS ou DIAGNOSTICAR OS
         type: string
         required: true
       operation:
         description: Carregar seeds ou recuperar somente o profile normal
         type: choice
-        options: [seed, restore]
+        options: [seed, restore, inspect]
         default: seed
         required: true
 permissions:
@@ -30,7 +30,9 @@ jobs:
           CONFIRMATION: ${{ inputs.confirmation }}
           OPERATION: ${{ inputs.operation }}
         run: |
-          if [ "$OPERATION" = 'restore' ]; then
+          if [ "$OPERATION" = 'inspect' ]; then
+            test "$CONFIRMATION" = 'DIAGNOSTICAR OS'
+          elif [ "$OPERATION" = 'restore' ]; then
             test "$CONFIRMATION" = 'RESTAURAR PROFILE OS'
           else
             test "$CONFIRMATION" = 'CARREGAR SEEDS DEMO'
@@ -52,6 +54,14 @@ jobs:
           test -n "$CLUSTER"
           aws eks update-kubeconfig --name "$CLUSTER"
       - name: Run existing DemoData and restore normal profile
+        if: inputs.operation != 'inspect'
         env:
           OPERATION: ${{ inputs.operation }}
         run: python -u scripts/seed-demo.py --operation "$OPERATION"
+      - name: Inspect rollout health without credentials or application logs
+        if: always()
+        run: |
+          kubectl -n workshop get deployment os-service -o custom-columns='NAME:.metadata.name,DESIRED:.spec.replicas,UPDATED:.status.updatedReplicas,READY:.status.readyReplicas,AVAILABLE:.status.availableReplicas'
+          kubectl -n workshop get pods -l app=os-service -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,READY:.status.containerStatuses[*].ready,WAITING:.status.containerStatuses[*].state.waiting.reason,EXIT:.status.containerStatuses[*].lastState.terminated.exitCode,RESTARTS:.status.containerStatuses[*].restartCount'
+          kubectl -n workshop get events --field-selector type=Warning,involvedObject.kind=Pod -o custom-columns='POD:.involvedObject.name,REASON:.reason,MESSAGE:.message' | tail -n 20
+          kubectl -n workshop get deployment os-service -o json | python -c 'import json,sys; d=json.load(sys.stdin); c=next(c for c in d["spec"]["template"]["spec"]["containers"] if c["name"]=="app"); print("Temporary OS env fields still present:", [e["name"] for e in c.get("env", []) if e["name"] in ("SPRING_PROFILES_ACTIVE", "DEMO_PASSWORD")])'

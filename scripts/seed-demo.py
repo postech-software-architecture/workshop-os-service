@@ -9,6 +9,7 @@ import secrets
 import subprocess
 import sys
 import tempfile
+import time
 
 NAMESPACE = 'workshop'
 DEPLOYMENT = 'os-service'
@@ -25,7 +26,9 @@ def kubectl(arguments):
     result = subprocess.run(['kubectl', '-n', NAMESPACE, *arguments], capture_output=True,
                             text=True, encoding='utf-8', timeout=360)
     if result.returncode:
-        raise RuntimeError('Kubernetes operation failed; command output suppressed to protect private data.')
+        reason = next((name for name in ('Conflict', 'Forbidden', 'NotFound', 'ProgressDeadlineExceeded')
+                       if name in result.stderr), 'CommandFailed')
+        raise RuntimeError('Kubernetes ' + arguments[0] + ' failed: ' + reason + '; private output suppressed.')
     return result.stdout
 
 
@@ -53,10 +56,42 @@ def restoration(deployment, original):
     installed = {entry['name']: entry for entry in INSTALLED}
     if current == original:
         return None
+    # Kubernetes defaults EnvVar.value to an empty string even when valueFrom is
+    # set. Compare that semantic default, without accepting a different source.
+    for entry in current.values():
+        if entry.get('value') == '' and entry.get('valueFrom'):
+            entry.pop('value')
+        reference = entry.get('valueFrom', {}).get('secretKeyRef', {})
+        if reference.get('optional') is False:
+            reference.pop('optional')
     if current != installed:
         raise ValueError('Demo environment changed concurrently; refusing to overwrite another configuration.')
     entries = [original.get(name, {'name': name, '$patch': 'delete'}) for name in FIELDS]
     return patch(deployment, entries)
+
+
+def restore_environment(directory, original):
+    for attempt in range(3):
+        current = json.loads(kubectl(['get', 'deployment', DEPLOYMENT, '-o', 'json']))
+        restore = restoration(current, original)
+        if not restore:
+            break
+        try:
+            apply_patch(directory, 'restore-' + str(attempt) + '.json', restore)
+            break
+        except RuntimeError as error:
+            if 'Conflict' not in str(error) or attempt == 2:
+                raise
+            time.sleep(1)
+    kubectl(['rollout', 'status', 'deployment/' + DEPLOYMENT, '--timeout=240s'])
+    print('Original OS deployment environment restored and rollout verified.')
+
+
+def restore_only():
+    # Recovery for the first installation, whose versioned deployment has neither
+    # of these explicit fields. Refuse to remove any non-demo configuration.
+    with tempfile.TemporaryDirectory() as temporary:
+        restore_environment(Path(temporary), {})
 
 
 def private_json(path, value):
@@ -114,18 +149,19 @@ def run():
             kubectl(['rollout', 'status', 'deployment/' + DEPLOYMENT, '--timeout=240s'])
             print('OS demo profile rollout completed; existing DemoData seeds were executed.')
         finally:
-            current = json.loads(kubectl(['get', 'deployment', DEPLOYMENT, '-o', 'json']))
-            restore = restoration(current, original)
-            if restore:
-                apply_patch(directory, 'restore-normal.json', restore)
-            kubectl(['rollout', 'status', 'deployment/' + DEPLOYMENT, '--timeout=240s'])
-            print('Original OS deployment environment restored and rollout verified.')
+            restore_environment(directory, original)
     print('Demo seeds available. No existing passwords, financial records or application credentials were rotated.')
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--operation', choices=('seed', 'restore'), default='seed')
+    args = parser.parse_args()
     try:
-        run()
-    except (ValueError, RuntimeError, OSError, KeyError, subprocess.SubprocessError):
+        restore_only() if args.operation == 'restore' else run()
+    except (ValueError, RuntimeError) as error:
+        print(str(error), file=sys.stderr)
+        sys.exit(1)
+    except (OSError, KeyError, subprocess.SubprocessError):
         print('Demo seed operation failed; private values suppressed. Check rollout and restoration status.', file=sys.stderr)
         sys.exit(1)

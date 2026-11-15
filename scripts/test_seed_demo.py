@@ -41,6 +41,23 @@ class SeedTest(unittest.TestCase):
             seed.restoration(deployment([{'name': 'SPRING_PROFILES_ACTIVE', 'value': 'other'}]), {})
         self.assertIsNone(seed.restoration(deployment(), {}))
 
+    def test_kubernetes_empty_value_and_false_optional_defaults_are_accepted(self):
+        entries = copy.deepcopy(seed.INSTALLED)
+        entries[1]['value'] = ''
+        entries[1]['valueFrom']['secretKeyRef']['optional'] = False
+        self.assertIsNotNone(seed.restoration(deployment(entries), {}))
+        entries[1]['valueFrom']['secretKeyRef']['optional'] = True
+        with self.assertRaises(ValueError):
+            seed.restoration(deployment(entries), {})
+
+    def test_restore_retries_resource_version_conflict_without_overwriting_other_fields(self):
+        with tempfile.TemporaryDirectory() as temporary, \
+                patch.object(seed, 'kubectl', return_value=json.dumps(deployment(seed.INSTALLED, '9'))), \
+                patch.object(seed, 'apply_patch', side_effect=[RuntimeError('Conflict'), None]) as write, \
+                patch.object(seed.time, 'sleep'), redirect_stdout(io.StringIO()):
+            seed.restore_environment(Path(temporary), {})
+        self.assertEqual(2, write.call_count)
+
     def test_existing_demo_secret_is_preserved(self):
         value = base64.b64encode(b'private-demo-password-long-enough').decode()
         with tempfile.TemporaryDirectory() as temporary, patch.object(seed, 'kubectl', return_value=json.dumps({'data': {'DEMO_PASSWORD': value}})) as kube, redirect_stdout(io.StringIO()) as output:

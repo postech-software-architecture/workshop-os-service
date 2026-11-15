@@ -3,8 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       confirmation:
-        description: Digite CARREGAR SEEDS DEMO
+        description: CARREGAR SEEDS DEMO para seed; RESTAURAR PROFILE OS para restore
         type: string
+        required: true
+      operation:
+        description: Carregar seeds ou recuperar somente o profile normal
+        type: choice
+        options: [seed, restore]
+        default: seed
         required: true
 permissions:
   contents: read
@@ -22,7 +28,13 @@ jobs:
       - name: Confirm demo data load
         env:
           CONFIRMATION: ${{ inputs.confirmation }}
-        run: test "$CONFIRMATION" = 'CARREGAR SEEDS DEMO'
+          OPERATION: ${{ inputs.operation }}
+        run: |
+          if [ "$OPERATION" = 'restore' ]; then
+            test "$CONFIRMATION" = 'RESTAURAR PROFILE OS'
+          else
+            test "$CONFIRMATION" = 'CARREGAR SEEDS DEMO'
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -40,4 +52,6 @@ jobs:
           test -n "$CLUSTER"
           aws eks update-kubeconfig --name "$CLUSTER"
       - name: Run existing DemoData and restore normal profile
-        run: python scripts/seed-demo.py
+        env:
+          OPERATION: ${{ inputs.operation }}
+        run: python -u scripts/seed-demo.py --operation "$OPERATION"

@@ -62,6 +62,22 @@ public class Saga {
 	@Transactional(propagation = org.springframework.transaction.annotation.Propagation.MANDATORY)
 	public boolean accept(Envelope e, Map<String, Object> row, OrdemServico order) {
 		String type = e.messageType();
+		if (type.equals("billing.orcamento-cancelado.v1") && Set
+			.of(StatusOrdemServico.COMPENSANDO, StatusOrdemServico.RECUPERACAO_PENDENTE,
+					StatusOrdemServico.COMPENSADA)
+			.contains(order.getStatus())) {
+			ensure(order.getId());
+			var d = details(order.getId());
+			// A budget acknowledgement cannot stand in for a payment cancellation/refund.
+			if (d.get("payment_id") != null || Boolean.TRUE.equals(d.get("financial_done"))
+					|| !Objects.toString(row.get("budget_id"), "").equals(e.payload().path("orcamentoId").asText())
+					|| num(row, "budget_version") != e.payload().path("orcamentoVersao").asInt())
+				return true;
+			db.update("UPDATE saga_details SET financial_done=true WHERE os_id=?", order.getId());
+			audit(order.getId(), type, e.messageId(), null);
+			finish(row, order);
+			return true;
+		}
 		boolean financial = Set
 			.of("billing.pagamento-confirmado.v1", "billing.pagamento-recusado.v1", "billing.pagamento-expirado.v1",
 					"billing.cobranca-cancelada.v1", "billing.cobranca-nao-criada.v1", "billing.pagamento-estornado.v1",
@@ -241,6 +257,13 @@ public class Saga {
 	private void financialCompensation(Map<String, Object> row, Map<String, Object> d, UUID cause) {
 		if (Boolean.TRUE.equals(d.get("financial_done")))
 			return;
+		if (d.get("payment_id") == null && row.get("budget_id") != null) {
+			// Wait for Billing, including when generation/approval races with cancellation.
+			emit(row, "billing.cancelar-orcamento.v1",
+					Map.of("orcamentoId", row.get("budget_id"), "orcamentoVersao", num(row, "budget_version")),
+					cause);
+			return;
+		}
 		if (d.get("payment_id") == null
 				|| Set.of("NONE", "RECUSADO", "EXPIRADO").contains((String) d.get("financial_state"))) {
 			db.update("UPDATE saga_details SET financial_done=true WHERE os_id=?", row.get("os_id"));

@@ -15,6 +15,77 @@ import static org.mockito.ArgumentMatchers.*;
 class SagaTest {
 
 	@Test
+	void unpaidCompensationWaitsForBudgetCancellationAndReversesStockOnce() {
+		details.put("payment_id", null);
+		details.put("financial_state", "NONE");
+		saga.cancel(id, "customer cancelled");
+		saga.accept(technical("execucao.trabalho-cancelado.v1"), row, order);
+		verify(messages).emit(argThat(e -> {
+			if (!e.messageType().equals("billing.cancelar-orcamento.v1"))
+				return false;
+			e.validate("billing");
+			return e.payload().path("orcamentoId").asText().equals(budget.toString());
+		}), eq(true));
+		assertEquals(StatusOrdemServico.COMPENSANDO, order.getStatus());
+		assertEquals(false, details.get("financial_done"));
+		verifyNoInteractions(stock);
+		saga.accept(budgetCancelled(budget, 1), row, order);
+		assertEquals(StatusOrdemServico.COMPENSADA, order.getStatus());
+		saga.accept(budgetCancelled(budget, 1), row, order);
+		saga.cancel(id, "duplicate cancellation");
+		verify(stock, times(1)).reverse(id, attempt, 1, budget);
+	}
+
+	@Test
+	void unrelatedBudgetAcknowledgementCannotCompleteCompensation() {
+		details.put("payment_id", null);
+		saga.cancel(id, "cancel");
+		saga.accept(technical("execucao.trabalho-cancelado.v1"), row, order);
+		saga.accept(budgetCancelled(UUID.randomUUID(), 1), row, order);
+		saga.accept(budgetCancelled(budget, 2), row, order);
+		assertEquals(false, details.get("financial_done"));
+		assertEquals(StatusOrdemServico.COMPENSANDO, order.getStatus());
+		verifyNoInteractions(stock);
+	}
+
+	@Test
+	void budgetAcknowledgementCannotReplaceRealPaymentCompensation() {
+		saga.cancel(id, "cancel");
+		saga.accept(technical("execucao.trabalho-cancelado.v1"), row, order);
+		saga.accept(budgetCancelled(budget, 1), row, order);
+		assertEquals(false, details.get("financial_done"));
+		verifyNoInteractions(stock);
+		verify(messages).emit(argThat(e -> e.messageType().equals("billing.cancelar-cobranca.v1")), eq(true));
+	}
+
+	@Test
+	void budgetAcknowledgementStillWaitsForTechnicalCancellation() {
+		details.put("payment_id", null);
+		saga.cancel(id, "cancel");
+		saga.accept(budgetCancelled(budget, 1), row, order);
+		assertEquals(StatusOrdemServico.COMPENSANDO, order.getStatus());
+		verifyNoInteractions(stock);
+		saga.accept(technical("execucao.trabalho-cancelado.v1"), row, order);
+		assertEquals(StatusOrdemServico.COMPENSADA, order.getStatus());
+		verify(stock).reverse(id, attempt, 1, budget);
+	}
+
+	@Test
+	void cancellationWithoutBudgetNeedsNoBillingAcknowledgement() {
+		details.put("payment_id", null);
+		row.put("budget_id", null);
+		saga.cancel(id, "cancel before composition");
+		saga.accept(technical("execucao.trabalho-cancelado.v1"), row, order);
+		assertEquals(StatusOrdemServico.COMPENSADA, order.getStatus());
+		verify(messages, never()).emit(argThat(e -> e.messageType().startsWith("billing.")), anyBoolean());
+	}
+
+	Envelope budgetCancelled(UUID reference, int revision) {
+		return event("billing.orcamento-cancelado.v1", "billing-service", reference,
+				Map.of("orcamentoId", reference, "orcamentoVersao", revision));
+	}
+
+	@Test
 	void staleConfirmationCannotReopenAlreadyCompensatedAttempt() {
 		order.projetarEstadoDistribuido(StatusOrdemServico.COMPENSANDO);
 		order.projetarEstadoDistribuido(StatusOrdemServico.COMPENSADA);

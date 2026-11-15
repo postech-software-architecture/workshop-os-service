@@ -1,0 +1,43 @@
+name: seed-demo-academy
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Digite CARREGAR SEEDS DEMO
+        type: string
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: prod-os-service
+  cancel-in-progress: false
+jobs:
+  seed:
+    if: github.ref == 'refs/heads/main'
+    environment: prod
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm demo data load
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: test "$CONFIRMATION" = 'CARREGAR SEEDS DEMO'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: azure/setup-kubectl@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION || 'us-east-1' }}
+      - name: Select cluster
+        env:
+          CLUSTER: ${{ vars.EKS_CLUSTER_NAME }}
+        run: |
+          test -n "$CLUSTER"
+          aws eks update-kubeconfig --name "$CLUSTER"
+      - name: Run existing DemoData and restore normal profile
+        run: python scripts/seed-demo.py
